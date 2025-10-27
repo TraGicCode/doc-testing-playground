@@ -37,6 +37,8 @@ jobs:
 
       - name: Build website
         if: github.event.action != 'closed'
+        env:
+          PR_NUMBER: ${{ github.event.number }}
         run: npm run build
 
       - name: Deploy preview
