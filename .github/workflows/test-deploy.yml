@@ -11,6 +11,7 @@ on:
       - closed
 permissions:
   contents: write
+  pull-requests: write
 defaults:
   run:
     working-directory: docs
