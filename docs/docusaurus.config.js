@@ -15,7 +15,7 @@ const BASE_URL =
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
+  title: "My Site 2",
   tagline: "Dinosaurs are cool",
   favicon: "img/favicon.ico",
 
