@@ -1,12 +1,22 @@
-name: Deploy to GitHub Pages
+name: "🦕 Docusaurus Documentation Website" 
 
 on:
-  push:
+  workflow_dispatch:
+  push: 
+    branches: 
+      - master 
+  pull_request:
     branches:
       - main
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
 
+permissions:
+  contents: write
+  pull-requests: write
 
 defaults:
   run:
@@ -14,7 +24,7 @@ defaults:
 
 jobs:
   build:
-    name: Build Docusaurus
+    name: Build Documentation Website
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -25,22 +35,32 @@ jobs:
           cache-dependency-path: docs/package-lock.json
 
       - name: Install dependencies
+        if: github.event.action != 'closed'
         run: npm ci
 
-      # - name: create version file
-      #   run: npm run version
 
-      - name: Build website
+      - name: Build Documentation
+        if: github.event.action != 'closed'
+        env:
+          PR_NUMBER: ${{ github.event.number }}
         run: npm run build
 
-      - name: Upload Build Artifact
+      - name: Deploy Documentation Preview
+        if: github.event_name == 'pull_request'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./docs/build/
+
+      - name: Upload Documentation to build artifacts
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/build
-
+        
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
