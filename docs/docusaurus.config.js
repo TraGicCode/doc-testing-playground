@@ -10,8 +10,8 @@ import { themes as prismThemes } from "prism-react-renderer";
 
 const BASE_URL =
   process.env.PR_NUMBER !== undefined
-    ? `/doc-testing-playground/pr-preview/pr-${process.env.PR_NUMBER}/`
-    : "/doc-testing-playground";
+    ? `/pr-preview/pr-${process.env.PR_NUMBER}/`
+    : "/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
