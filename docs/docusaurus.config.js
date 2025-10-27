@@ -7,12 +7,6 @@
 import { themes as prismThemes } from "prism-react-renderer";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-
-const BASE_URL =
-  process.env.PR_NUMBER !== undefined
-    ? `/doc-testing-playground/pr-preview/pr-${process.env.PR_NUMBER}/`
-    : "/doc-testing-playground";
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "My Site 2",
@@ -28,7 +22,7 @@ const config = {
   url: "https://tragiccode.com",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: BASE_URL,
+  baseUrl: "/doc-testing-playground",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
